@@ -15,14 +15,7 @@ class MyApp extends StatelessWidget {
         // This is the theme of your application.
         primarySwatch: Colors.indigo,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('INT3207 1'),
-        ),
-        body: Center(
-          child: RandomWords(),
-        ),
-      ),
+      home: RandomWords(),
     );
   }
 }
@@ -34,11 +27,17 @@ class RandomWords extends StatefulWidget {
 
 class _RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
+  final _fonts = TextStyle(
+    fontSize: 16,
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: _buildSuggestions(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('team 10'),
+      ),
+      body: _buildSuggestions(),
     );
   }
 
@@ -46,16 +45,19 @@ class _RandomWordsState extends State<RandomWords> {
     return ListTile(
       title: Text(
         pair.asPascalCase,
+        style: _fonts,
       ),
     );
   }
 
   Widget _buildSuggestions() {
     return ListView.builder(
-      padding: EdgeInsets.only(top: 16, right: 16, bottom: 16, left: 16),
+      padding: EdgeInsets.only(top: 8, bottom: 8, left: 0, right: 0),
       itemBuilder: (context, index) {
         if (index.isOdd) {
-          return Divider();
+          return Divider(
+            color: Colors.blue,
+          );
         }
 
         final i = index ~/ 2;
