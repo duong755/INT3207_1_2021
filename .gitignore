@@ -29,6 +29,7 @@ local.properties
 *.ipr
 *.iws
 .idea/
+.idea/dictionaries
 
 # Scala
 /.metals
