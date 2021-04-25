@@ -7,8 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="uet.wemap.app.MainActivity">
-
-
     <asia.wemap.androidsdk.WeMapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"

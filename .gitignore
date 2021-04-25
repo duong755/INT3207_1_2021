@@ -30,6 +30,7 @@ local.properties
 *.iws
 .idea/
 .idea/dictionaries
+.settings
 
 # Scala
 /.metals

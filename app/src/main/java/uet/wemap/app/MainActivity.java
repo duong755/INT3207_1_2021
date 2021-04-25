@@ -20,7 +20,7 @@ import asia.wemap.androidsdk.WeMapOptions;
 import asia.wemap.androidsdk.geometry.LatLng;
 import asia.wemap.androidsdk.permissions.PermissionsListener;
 
-public class MainActivity extends AppCompatActivity implements PermissionsListener {
+public class MainActivity extends FragmentActivity implements PermissionsListener {
 
     private WeMapView mapView;
 
@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements PermissionsListen
         mapView.getWeMapMapAsync(new WeMapMap.OnWeMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull WeMapMap wemapMap) {
-
-
                 wemapMap.enableLocationPermission(MainActivity.this, MainActivity.this);
                 wemapMap.addOnMapClickListener(new WeMapMap.OnMapClickListener() {
                     @Override
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements PermissionsListen
                         Toast.makeText(MainActivity.this, "Map click " + point.toString(), Toast.LENGTH_SHORT).show();
                         return true;
                     }
-                } );
+                });
                 wemapMap.addOnMapLongClickListener(new WeMapMap.OnMapLongClickListener() {
                     @Override
                     public boolean onMapLongClick(LatLng point) {
