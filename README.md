@@ -9,3 +9,25 @@
 | 18020044     | Phạm Tuấn Nghĩa            |
 | 18021186     | Vương Tiến Thành           |
 | 18020265     | Nguyễn Đức Quốc Đại        |
+
+## Cài đặt (theo thứ tự)
+
+1. Android Studio, Android SDK (version 29, 30)
+2. Node, npm, yarn
+3. `npm i -g @ionic/cli`
+4. Di chuyển đến thư mục của project, chạy `yarn` để cài các dependencies
+
+## Chạy ứng dụng
+
+### Trên web
+
+```shell
+yarn start
+```
+
+### Trên android
+
+```shell
+yarn build-android
+yarn run-android
+```
