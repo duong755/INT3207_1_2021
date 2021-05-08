@@ -1,2 +1,0 @@
-include ':app'
-rootProject.name = "INT3506_2"
