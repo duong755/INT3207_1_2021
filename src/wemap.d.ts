@@ -1,15 +1,50 @@
-interface WeMapOptions {
+/// <reference types="mapbox-gl" />
+
+import { LngLatLike, Map } from "mapbox-gl";
+
+declare interface WeMapOptions {
+  /**
+   * @requires
+   * @description API key
+   */
   key: string;
+  /**
+   * @requires
+   * @description HTML element that contains the map, or the id of that element
+   */
   container: string | HTMLElement;
+  /**
+   * @description Style of the map, available values are "default", "bright", "dark"
+   */
   style?: "default" | "bright" | "dark";
-  center?: [number, number];
+  /**
+   * @description The coordinates of the center of the map when first initialized
+   * @defaultValue `[105.8550736, 21.0283243]`
+   */
+  center?: LngLatLike;
+  /**
+   * @description Zoom factor of the map
+   * @defaultValue `10`
+   */
   zoom?: number;
+  /**
+   * @description If `true`, reverse when click and open menu when right-click
+   * @defaultValue `false`
+   */
   reverse?: boolean;
+  /**
+   * @description If `true`, turn on traffic layer
+   * @defaultValue `false`
+   */
   traffic?: boolean;
+  /**
+   * @description If true, the URL query parameters will be updated while using the map
+   * @defaultValue `true`
+   */
   urlControlLayer?: boolean;
 }
 
-declare class WeMap {
+declare class WeMap extends Map {
   public constructor({
     style = "default",
     center = [105.8550736, 21.0283243],
@@ -18,56 +53,4 @@ declare class WeMap {
     traffic = false,
     urlControlLayer = true,
   }: WeMapOptions);
-
-  public addControl(control: any, position?: "top-left" | "top-right" | "bottom-left" | "bottom-right"): WeMap;
-  public removeControl(control: any): WeMap;
-  public addImage(
-    id: string,
-    image:
-      | HTMLImageElement
-      | ImageBitmap
-      | ImageData
-      | { width: number; height: number; data: Uint8Array | Uint8ClampedArray }
-  ): void;
-  public loadImage(url: string, callback: (error: Error, image: any) => void): void;
-}
-
-interface WeGeocoderOptions {
-  key: string;
-  engine?: "default" | "pelias";
-  suggesstion?: {
-    min_char: number;
-  };
-  removeDuplicates?: boolean;
-  flyTo?: boolean | "hybrid";
-  url?: string;
-  placeholder?: string;
-  onSubmitOnly?: boolean;
-  customAttribution?: string;
-  params?: {
-    [key: string]: any;
-  };
-  sources?: WeGeocoderSource | WeGeocoderSource[];
-  marker?: boolean | Object;
-  wof?: boolean | Object;
-}
-
-type WeGeocoderSource = "oa" | "osm" | "wof" | "gn";
-
-declare class WeGeocoder {
-  public constructor(options: WeGeocoderOptions);
-}
-
-declare interface Window {
-  wemapgl: {
-    WeMap: new ({
-      style = "default",
-      center = [105.8550736, 21.0283243],
-      zoom = 10,
-      reverse = false,
-      traffic = false,
-      urlControlLayer = true,
-    }: WeMapOptions) => WeMap;
-    WeGeocoder: new(weGeocoderOptions: WeGeocoderOptions) => WeGeocoder;
-  };
 }

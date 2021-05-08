@@ -22,6 +22,6 @@
   },
   "include": [
     "src",
-    "src/wemap.d.ts"
+    "src/map.d.ts"
   ]
 }

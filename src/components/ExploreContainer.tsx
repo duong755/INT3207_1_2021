@@ -11,10 +11,7 @@ const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
     new window.wemapgl.WeMap({ key: "GqfwrZUEfxbwbnQUhtBMFivEysYIxelQ", container: "mapContainer" });
   }, []);
 
-  return (
-    <div className="container" id="mapContainer">
-    </div>
-  );
+  return <div className="container" id="mapContainer"></div>;
 };
 
 export default ExploreContainer;

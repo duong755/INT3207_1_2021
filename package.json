@@ -34,6 +34,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "format": "./node_modules/.bin/prettier --write ./src",
+    "install": "npm i -g @ionic/cli && ionic config set -g npmClient yarn",
     "build-android": "ionic cap build android",
     "run-android": "ionic cap run android --livereload --external"
   },
@@ -61,6 +63,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
     "@types/jest": "^26.0.20",
+    "@types/mapbox-gl": "^2.1.2",
     "@types/node": "^12.19.15",
     "@types/react": "^16.14.3",
     "@types/react-dom": "^16.9.10",
