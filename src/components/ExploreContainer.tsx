@@ -8,7 +8,11 @@ interface ContainerProps {
 
 const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
   useEffect(() => {
-    new window.wemapgl.WeMap({ key: "GqfwrZUEfxbwbnQUhtBMFivEysYIxelQ", container: "mapContainer" });
+    const API_KEY = "GqfwrZUEfxbwbnQUhtBMFivEysYIxelQ";
+    const map = new window.wemapgl.WeMap({
+      key: API_KEY,
+      container: "mapContainer",
+    });
   }, []);
 
   return <div className="container" id="mapContainer"></div>;

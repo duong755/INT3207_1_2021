@@ -1,6 +1,8 @@
 /// <reference types="mapbox-gl" />
 
-type WeFilterOptions = {
+import { IControl } from "mapbox-gl";
+
+declare interface WeFilterOptions {
   filters: {
     [category: string]: {
       text: string;
@@ -12,6 +14,6 @@ type WeFilterOptions = {
   }[];
 };
 
-declare class WeFilterControl {
+declare class WeFilterControl implements IControl {
   public constructor(filterOptions: FilterOptions);
 }

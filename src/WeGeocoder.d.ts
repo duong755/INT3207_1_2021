@@ -1,6 +1,6 @@
 /// <reference types="mapbox-gl" />
 
-import { Marker } from "mapbox-gl";
+import { Marker, IControl } from "mapbox-gl";
 
 declare interface WeGeocoderOptions {
   /**
@@ -59,6 +59,6 @@ declare interface WeGeocoderOptions {
 
 declare type WeGeocoderSource = "oa" | "osm" | "wof" | "gn";
 
-declare class WeGeocoder {
+declare class WeGeocoder implements IControl {
   public constructor(options: WeGeocoderOptions);
 }

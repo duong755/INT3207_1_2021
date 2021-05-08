@@ -14,7 +14,8 @@
 
 1. Android Studio, Android SDK (version 29, 30).
 2. Node, npm, yarn.
-3. Di chuyển đến thư mục của project, chạy `yarn install` để cài các dependencies và `@ionic/cli`.
+3. Di chuyển đến thư mục của project, chạy `yarn install` để cài các dependencies.
+4. `yarn install-ionic` để cài đặt và cấu hình `@ionic/cli`.
 
 ## Chạy ứng dụng
 

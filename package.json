@@ -35,7 +35,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "./node_modules/.bin/prettier --write ./src",
-    "install": "npm i -g @ionic/cli && ionic config set -g npmClient yarn",
+    "install-ionic": "npm i -g @ionic/cli && ionic config set -g npmClient yarn",
     "build-android": "ionic cap build android",
     "run-android": "ionic cap run android --livereload --external"
   },
