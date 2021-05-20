@@ -1,13 +1,12 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react";
-// import ExploreContainer from "../components/ExploreContainer";
+import { IonContent, IonHeader, IonPage, IonSearchbar, IonTitle, IonToolbar } from "@ionic/react";
 import "./Search.scss";
 
-const Tab2: React.FC = () => {
+const Search: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Search</IonTitle>
+          <IonSearchbar />
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -21,4 +20,4 @@ const Tab2: React.FC = () => {
   );
 };
 
-export default Tab2;
+export default Search;

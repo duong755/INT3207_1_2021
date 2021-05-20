@@ -45,17 +45,17 @@ const App: React.FC = () => {
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
-            <IonTabButton tab="tab1" href="/tab1">
+            <IonTabButton tab="map" href="/map">
               <IonIcon icon={map} />
               <IonLabel>Bản đồ</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="tab2" href="/tab2">
+            <IonTabButton tab="search" href="/search">
               <IonIcon icon={searchOutline} />
               <IonLabel>Tìm kiếm</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="tab3" href="/tab3">
+            <IonTabButton tab="info" href="/info">
               <IonIcon icon={informationCircleOutline} />
-              <IonLabel>Nhóm 10</IonLabel>
+              <IonLabel>Thông tin khác</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>

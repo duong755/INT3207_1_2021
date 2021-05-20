@@ -12,6 +12,7 @@ import {
   FitBoundsOptions,
   FullscreenControlOptions,
   LngLat,
+  LngLatLike,
   LngLatBounds,
   Evented,
   Map,
