@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useIonViewDidEnter, useIonToast } from "@ionic/react";
 
 import "./TheMap.scss";
-import { API_KEY } from "../constants/wemap";
+import { API_KEY, SELECTOR } from "../constants/wemap";
 import { IonButtons, IonIcon } from "@ionic/react";
 import { addOutline, carOutline, removeOutline } from "ionicons/icons";
 
@@ -12,7 +12,7 @@ const TheMap: React.FC<any> = () => {
   const [present] = useIonToast();
 
   useIonViewDidEnter(() => {
-    document.querySelector("#wemap-directions-add-button > a")?.setAttribute("href", "javascript:void(0)");
+    document.querySelector(SELECTOR.BTN_ADD_WAYPOINT)?.setAttribute("href", "javascript:void(0)");
   }, []);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const TheMap: React.FC<any> = () => {
     // this spreads the map to entire screen
     map.once("load", function () {
       window.dispatchEvent(new Event("resize"));
-      document.querySelector("#wemap-directions-add-button > a")?.setAttribute("href", "javascript:void(0)");
+      document.querySelector(SELECTOR.BTN_ADD_WAYPOINT)?.setAttribute("href", "javascript:void(0)");
     });
     const directions = new window.wemapgl.WeDirections({
       key: API_KEY,
@@ -57,7 +57,7 @@ const TheMap: React.FC<any> = () => {
       }
       setEnableTraffic((enableTraffic) => !enableTraffic);
     },
-    [setEnableTraffic, enableTraffic]
+    [setEnableTraffic, enableTraffic, present]
   );
 
   return (
