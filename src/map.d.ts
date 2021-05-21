@@ -1,6 +1,7 @@
 /// <reference path="./WeMap.d.ts" />
 /// <reference path="./WeGeocoder.d.ts" />
 /// <reference path="./WeFilterControl.d.ts" />
+/// <reference path="./Response.d.ts" />
 
 import {
   GeolocateControl,

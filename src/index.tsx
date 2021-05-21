@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { QueryClientProvider, QueryClient } from "react-query";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={new QueryClient()}>
+      <App />
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
