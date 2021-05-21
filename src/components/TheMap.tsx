@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useIonViewDidEnter, useIonToast } from "@ionic/react";
 
 import "./TheMap.scss";
 import { API_KEY } from "../constants/wemap";
@@ -7,6 +8,12 @@ import { addOutline, carOutline, removeOutline } from "ionicons/icons";
 
 const TheMap: React.FC<any> = () => {
   const [enableTraffic, setEnableTraffic] = useState(false);
+
+  const [present] = useIonToast();
+
+  useIonViewDidEnter(() => {
+    document.querySelector("#wemap-directions-add-button > a")?.setAttribute("href", "javascript:void(0)");
+  }, []);
 
   useEffect(() => {
     const map = new window.wemapgl.WeMap({
@@ -45,9 +52,12 @@ const TheMap: React.FC<any> = () => {
 
   const handleToggleTraffic = useCallback(
     (event: React.MouseEvent) => {
+      if (!enableTraffic) {
+        present("Hiển thị mật độ giao thông", 3000);
+      }
       setEnableTraffic((enableTraffic) => !enableTraffic);
     },
-    [setEnableTraffic]
+    [setEnableTraffic, enableTraffic]
   );
 
   return (

@@ -1,10 +1,14 @@
+import { useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { IonApp, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { informationCircleOutline, map, searchOutline } from "ionicons/icons";
+import { informationCircleOutline, map, searchOutline, compassOutline } from "ionicons/icons";
+
 import Main from "./pages/Main";
 import Search from "./pages/Search";
+import Routing from "./pages/Routing";
 import Info from "./pages/Info";
+import { API_KEY } from "./constants/wemap";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -26,8 +30,21 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.scss";
 
 const App: React.FC = () => {
+  useEffect(() => {
+    const map = new window.wemapgl.WeMap({
+      key: API_KEY,
+      container: "hiddenMap",
+    });
+    const directions = new window.wemapgl.WeDirections({
+      key: API_KEY,
+    });
+    map.addControl(directions, "top-left");
+    window.wemapgl.thedirections = directions;
+  }, []);
+
   return (
     <IonApp>
+      <div id="hiddenMap" style={{ display: "none" }}></div>
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
@@ -36,6 +53,9 @@ const App: React.FC = () => {
             </Route>
             <Route exact path="/search">
               <Search />
+            </Route>
+            <Route exact path="/routing">
+              <Routing />
             </Route>
             <Route path="/info">
               <Info />
@@ -52,6 +72,10 @@ const App: React.FC = () => {
             <IonTabButton tab="search" href="/search">
               <IonIcon icon={searchOutline} />
               <IonLabel>Tìm kiếm</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="routing" href="/routing">
+              <IonIcon icon={compassOutline}></IonIcon>
+              <IonLabel>Chỉ đường</IonLabel>
             </IonTabButton>
             <IonTabButton tab="info" href="/info">
               <IonIcon icon={informationCircleOutline} />

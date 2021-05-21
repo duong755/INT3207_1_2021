@@ -1,6 +1,8 @@
 /// <reference types="mapbox-gl" />
+/// <reference types="geojson" />
 
 import { Control, IControl, Point } from "mapbox-gl";
+import { Feature, Position } from "geojson";
 
 interface WeDirectionsOptions {
   /**
@@ -29,6 +31,56 @@ interface WeDirectionsOptions {
   exclude?: "ferry" | "toll" | "motorway" | null;
 }
 
+interface ProfileData {
+  profile: string;
+}
+
+interface LoadingData {
+  type: "origin" | "destination";
+}
+
+interface ClearData {
+  type: "origin" | "destination";
+}
+
+interface OriginData {
+  feature: Feature;
+}
+
+interface DestinationData {
+  feature: Feature;
+}
+
+interface ErrorData {
+  error: string;
+}
+
+interface RouteData {
+  route: {
+    distance: number;
+    duration: number;
+    geometry: string;
+    legs: {
+      steps: {
+        intersections: any[];
+        driving_side: string;
+        geometry: Position[];
+        distance: number;
+        maneuver: {
+          type: string;
+          location: Position;
+          instruction: string;
+          modifier?: string;
+        };
+        mode: string;
+        name: string;
+      }[] & { distance: number; duration: number; summary: string; weight: number; };
+    }[];
+    weight: number;
+    weight_name: string;
+  }[];
+}
+
 declare class WeDirections extends Control implements IControl {
   constructor(options: WeDirectionsOptions);
 
@@ -54,12 +106,13 @@ declare class WeDirections extends Control implements IControl {
 
   removeRoutes(): WeDirections;
 
-  on(
-    event: "clear" | "loading" | "profile" | "origin" | "destination" | "route" | "error",
-    callback: Function
-  ): WeDirections;
+  on(event: "clear", callback: (this: WeDirections, clearData?: ClearData) => void): WeDirections;
+  on(event: "loading", callback: (this: WeDirections, loadingData?: LoadingData) => void): WeDirections;
+  on(event: "profile", callback: (this: WeDirections, profileData?: ProfileData) => void): WeDirections;
+  on(event: "origin", callback: (this: WeDirections, originData?: OriginData) => void): WeDirections;
+  on(event: "destination", callback: (this: WeDirections, destinationData?: DestinationData) => void): WeDirections;
+  on(event: "route", callback: (this: WeDirections, routeData?: RouteData) => void): WeDirections;
+  on(event: "error", callback: (this: WeDirections, errorData?: ErrorData) => void): WeDirections;
 
-  onAdd(map: Map): HTMLElement;
-
-  onRemove(map: Map): void;
+  onRemove(map: Map): Control;
 }
