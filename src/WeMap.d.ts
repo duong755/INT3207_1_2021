@@ -24,6 +24,7 @@ declare interface WeMapOptions {
   center?: LngLatLike;
   /**
    * @description Zoom factor of the map
+   * https://docs.mapbox.com/help/glossary/zoom-level/
    * @defaultValue `10`
    */
   zoom?: number;

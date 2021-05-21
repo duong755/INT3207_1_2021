@@ -1,6 +1,6 @@
 /// <reference types="mapbox-gl" />
 
-import { IControl, Point } from "mapbox-gl";
+import { Control, IControl, Point } from "mapbox-gl";
 
 interface WeDirectionsOptions {
   /**
@@ -29,7 +29,7 @@ interface WeDirectionsOptions {
   exclude?: "ferry" | "toll" | "motorway" | null;
 }
 
-declare class WeDirections implements IControl {
+declare class WeDirections extends Control implements IControl {
   constructor(options: WeDirectionsOptions);
 
   interactive(state: boolean): WeDirections;
@@ -55,4 +55,8 @@ declare class WeDirections implements IControl {
   removeRoutes(): WeDirections;
 
   on(event: "clear" | "loading" | "profile" | "origin" | "destination" | "route" | "error", callback: Function): WeDirections;
+
+  onAdd(map: Map): HTMLElement;
+
+  onRemove(map: Map): void;
 }

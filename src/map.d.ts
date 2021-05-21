@@ -36,7 +36,7 @@ declare global {
       version: string;
       WeMap: new (options: WeMapOptions) => WeMap;
       WeGeocoder: new (options: WeGeocoderOptions) => WeGeocoder;
-      Marker: new (options?: MarkerOptions, legacyOptions?: any) => Marker;
+      Marker: (new (element: HTMLElement) => Marker) | (new (options?: MarkerOptions, legacyOptions?: any) => Marker);
       WeFilterControl: new (options: WeFilterOptions) => WeFilterControl;
       WeDirections: new (options: WeDirectionsOptions) => WeDirections;
       WeGeolocateControl: new (options: {
