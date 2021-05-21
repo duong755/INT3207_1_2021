@@ -54,7 +54,10 @@ declare class WeDirections extends Control implements IControl {
 
   removeRoutes(): WeDirections;
 
-  on(event: "clear" | "loading" | "profile" | "origin" | "destination" | "route" | "error", callback: Function): WeDirections;
+  on(
+    event: "clear" | "loading" | "profile" | "origin" | "destination" | "route" | "error",
+    callback: Function
+  ): WeDirections;
 
   onAdd(map: Map): HTMLElement;
 

@@ -1,6 +1,6 @@
 /// <reference types="mapbox-gl" />
 
-import { Marker, IControl } from "mapbox-gl";
+import { Marker, IControl, Control } from "mapbox-gl";
 
 declare interface WeGeocoderOptions {
   /**
@@ -13,11 +13,11 @@ declare interface WeGeocoderOptions {
    * @defaultValue `default`
    */
   engine?: "default" | "pelias";
-  suggesstion?: {
+  suggestion?: {
     /**
      * @description Minimum characters to begin to auto-complete
      */
-    min_char: number;
+    min_chars?: number;
   };
   /**
    * @description Remove duplicated places, based on coordinates
@@ -59,6 +59,6 @@ declare interface WeGeocoderOptions {
 
 declare type WeGeocoderSource = "oa" | "osm" | "wof" | "gn";
 
-declare class WeGeocoder implements IControl {
+declare class WeGeocoder extends Control implements IControl {
   public constructor(options: WeGeocoderOptions);
 }

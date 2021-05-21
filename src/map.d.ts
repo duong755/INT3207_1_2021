@@ -33,6 +33,8 @@ import { WeDirections, WeDirectionsOptions } from "./WeDirections";
 declare global {
   interface Window {
     wemapgl: {
+      themap?: WeMap;
+      thedirections?: WeDirections;
       version: string;
       WeMap: new (options: WeMapOptions) => WeMap;
       WeGeocoder: new (options: WeGeocoderOptions) => WeGeocoder;

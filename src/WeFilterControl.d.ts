@@ -12,7 +12,7 @@ declare interface WeFilterOptions {
       layers: string[];
     };
   }[];
-};
+}
 
 declare class WeFilterControl implements IControl {
   public constructor(filterOptions: FilterOptions);
