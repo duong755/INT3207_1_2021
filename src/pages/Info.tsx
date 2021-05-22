@@ -4,9 +4,7 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonListHeader,
   IonPage,
-  IonText,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";

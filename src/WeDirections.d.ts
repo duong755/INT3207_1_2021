@@ -55,30 +55,33 @@ interface ErrorData {
   error: string;
 }
 
-interface RouteData {
-  route: {
-    distance: number;
-    duration: number;
-    geometry: string;
-    legs: {
-      steps: {
-        intersections: any[];
-        driving_side: string;
-        geometry: Position[];
-        distance: number;
-        maneuver: {
-          type: string;
-          location: Position;
-          instruction: string;
-          modifier?: string;
-        };
-        mode: string;
-        name: string;
-      }[] & { distance: number; duration: number; summary: string; weight: number; };
-    }[];
-    weight: number;
-    weight_name: string;
+type RouteDetail = {
+  distance: number;
+  duration: number;
+  geometry: string;
+  legs: {
+    steps: {
+      intersections: any[];
+      driving_side: string;
+      duration: number;
+      geometry: Position[];
+      distance: number;
+      maneuver: {
+        type: string;
+        location: Position;
+        instruction: string;
+        modifier?: string;
+      };
+      mode: string;
+      name: string;
+    }[] & { distance: number; duration: number; summary: string; weight: number };
   }[];
+  weight: number;
+  weight_name: string;
+};
+
+interface RouteData {
+  route: [RouteDetail];
 }
 
 declare class WeDirections extends Control implements IControl {

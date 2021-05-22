@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
+
+import { RouteProvider } from "./context/Route";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
@@ -8,7 +10,9 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={new QueryClient()}>
-      <App />
+      <RouteProvider>
+        <App />
+      </RouteProvider>
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")

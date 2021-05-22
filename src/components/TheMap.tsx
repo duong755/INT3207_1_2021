@@ -1,13 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useIonViewDidEnter, useIonToast } from "@ionic/react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { useIonViewDidEnter, useIonToast, IonIcon, IonButtons } from "@ionic/react";
+import { addOutline, carOutline, compassOutline, removeOutline } from "ionicons/icons";
 
 import "./TheMap.scss";
 import { API_KEY, SELECTOR } from "../constants/wemap";
-import { IonButtons, IonIcon } from "@ionic/react";
-import { addOutline, carOutline, removeOutline } from "ionicons/icons";
+import { RouteContext } from "../context/Route";
 
 const TheMap: React.FC<any> = () => {
   const [enableTraffic, setEnableTraffic] = useState(false);
+  const { setRouteData } = useContext(RouteContext);
+  const routerHistory = useHistory();
 
   const [present] = useIonToast();
 
@@ -36,6 +39,26 @@ const TheMap: React.FC<any> = () => {
         instructions: false,
       },
     });
+
+    directions.on("route", (routeData) => {
+      setRouteData(routeData?.route ?? []);
+      present({
+        duration: 5000,
+        animated: true,
+        position: "bottom",
+        color: "primary",
+        message: "",
+        buttons: [
+          {
+            text: "Chỉ đường",
+            handler: () => routerHistory.push("/routing"),
+            icon: compassOutline,
+            side: "end",
+          },
+        ],
+      });
+    });
+
     map.addControl(directions, "top-left");
 
     window.wemapgl.themap = map;
