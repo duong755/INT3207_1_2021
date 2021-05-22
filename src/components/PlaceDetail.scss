@@ -1,0 +1,25 @@
+.btn-close {
+  margin-right: 10px;
+}
+
+.place-detail-content {
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.rating {
+  display: flex;
+  flex-direction: column;
+  .submit-rate {
+    margin-top: 15px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    background-color: var(--ion-color-primary);
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    flex-shrink: 1;
+  }
+}

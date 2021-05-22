@@ -15,31 +15,38 @@ import {
   IonItem,
   IonLabel,
   IonRouterLink,
+  IonInput,
 } from "@ionic/react";
-import { reloadCircleOutline } from "ionicons/icons";
+import { locateOutline, reloadCircleOutline } from "ionicons/icons";
 
 import { place } from "../axios/place";
+import { PlaceDetail } from "../components/PlaceDetail";
 
 import "./Search.scss";
 
 const Search: React.FC = () => {
   const [query, setQuery] = useState("");
+  const [maxDistance, setMaxDistance] = useState("");
+  const [detail, setDetail] = useState<PlaceDetail | undefined>(void 0);
   const handleChangeQuery = useCallback((event: CustomEvent<SearchbarChangeEventDetail>) => {
     setQuery(event.detail.value ?? "");
   }, []);
+  const handleChangeMaxDistance = useCallback((event: CustomEvent<SearchbarChangeEventDetail>) => {
+    setMaxDistance(event.detail.value ?? "5");
+  }, []);
 
   const { data, isFetching, isError, isSuccess, refetch } = useQuery(
-    ["place", query],
+    ["place", query, maxDistance],
     () => {
       return place.get("/place", {
         params: {
           q: query,
-          maxDistance: 0.5,
+          maxDistance: maxDistance,
         },
       });
     },
     {
-      enabled: !!query.trim(),
+      enabled: !!query.trim() && !Number.isNaN(Number(maxDistance)),
     }
   );
 
@@ -50,12 +57,19 @@ const Search: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonSearchbar value={query} onIonChange={handleChangeQuery} />
+          <IonSearchbar
+            searchIcon={locateOutline}
+            placeholder="Bán kính tìm kiếm (km)"
+            value={maxDistance}
+            onIonChange={handleChangeMaxDistance}
+          />
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         {isFetching && (
           <div className="fetching">
             <IonSpinner name="dots" />
+            <IonText>Đang tìm kiếm</IonText>
           </div>
         )}
         {isError && (
@@ -72,9 +86,10 @@ const Search: React.FC = () => {
             <IonListHeader>
               {payload.count > 0 ? `Tìm thấy ${payload.count} kết quả` : `Không tìm thấy kết quả nào`}
             </IonListHeader>
+            <PlaceDetail detail={detail} onDismiss={() => setDetail(void 0)} />
             {payload.docs.map((resultItem) => {
               return (
-                <IonItem key={resultItem._id}>
+                <IonItem key={resultItem.place_name} onClick={() => setDetail(resultItem)}>
                   <IonLabel>
                     <h2>{resultItem.place_name}</h2>
                     <p>{resultItem.place_address}</p>
