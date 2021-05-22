@@ -12,7 +12,7 @@
 
 ## Cài đặt (theo thứ tự)
 
-1. Android Studio, Android SDK (version 29, 30).
+1. Android Studio, Android SDK (version 29, 30). Nếu sử dụng linux, hãy cài thông qua `snap`
 2. Node, npm, yarn.
 3. Di chuyển đến thư mục của project, chạy `yarn install` để cài các dependencies.
 4. `yarn install-ionic` để cài đặt và cấu hình `@ionic/cli`.

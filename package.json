@@ -45,8 +45,8 @@
     "eject": "react-scripts eject",
     "format": "./node_modules/.bin/prettier --write ./src",
     "install-ionic": "npm i -g @ionic/cli && ionic config set -g npmClient yarn",
-    "build-android": "ionic cap build android",
-    "run-android": "ionic cap run android --livereload --external"
+    "build-android": "react-scripts build && ionic cap build android",
+    "run-android": "react-scripts build && ionic cap run android --livereload --external"
   },
   "eslintConfig": {
     "extends": [
