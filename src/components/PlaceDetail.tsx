@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   IonHeader,
   IonModal,
@@ -9,7 +10,7 @@ import {
   IonRouterLink,
   useIonToast,
 } from "@ionic/react";
-import { close, star } from "ionicons/icons";
+import { close, compassSharp } from "ionicons/icons";
 import Rating from "@material-ui/lab/Rating";
 import { UniqueDeviceID } from "@ionic-native/unique-device-id";
 
@@ -19,6 +20,7 @@ import { rate } from "../axios/rate";
 const PlaceDetail: React.FC<PlaceDetailProps> = (props) => {
   const { detail, onDismiss } = props;
   const [rating, setRating] = useState<number | null>(null);
+  const routerHistory = useHistory<{ destination: [number | undefined, number | undefined] }>();
   const [presentToast] = useIonToast();
 
   const handleChangeRating = useCallback((event: React.ChangeEvent<{}>, value: number | null) => {
@@ -45,6 +47,11 @@ const PlaceDetail: React.FC<PlaceDetailProps> = (props) => {
     }
   }, []);
 
+  const showRoutingOnTheMap = useCallback(() => {
+    routerHistory.push("/map", { destination: [detail?.latitude, detail?.longitude] });
+    onDismiss();
+  }, [detail, routerHistory]);
+
   return (
     <IonModal isOpen={detail !== void 0} swipeToClose={true} animated={true}>
       <IonHeader>
@@ -55,7 +62,12 @@ const PlaceDetail: React.FC<PlaceDetailProps> = (props) => {
       </IonHeader>
       <IonContent>
         <div className="place-detail-content">
-          <h3>{detail?.place_name}</h3>
+          <div className="place-name">
+            <h3>{detail?.place_name}</h3>
+          </div>
+          <p className="place-routing" onClick={showRoutingOnTheMap}>
+            <IonIcon icon={compassSharp} size="large" />Chỉ đường
+          </p>
           <p>{detail?.place_address}</p>
           <IonRouterLink target="_blank" href={detail?.place_info_url}>
             {detail?.place_info_url}
@@ -78,7 +90,9 @@ const PlaceDetail: React.FC<PlaceDetailProps> = (props) => {
                 : "Tuyệt vời")}
             <br />
             <span>
-              <span className="submit-rate" onClick={() => handleSubmitRate()}>Gửi đánh giá</span>
+              <span className="submit-rate" onClick={() => handleSubmitRate()}>
+                Gửi đánh giá
+              </span>
             </span>
           </div>
         </div>

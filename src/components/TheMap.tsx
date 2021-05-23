@@ -1,13 +1,16 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useIonViewDidEnter, useIonToast, IonIcon, IonButtons } from "@ionic/react";
-import { addOutline, carOutline, compassOutline, removeOutline } from "ionicons/icons";
+import { addOutline, carOutline, chevronForwardCircleOutline, compassOutline, removeOutline } from "ionicons/icons";
+import { Geolocation } from "@ionic-native/geolocation";
 
 import "./TheMap.scss";
 import { API_KEY, SELECTOR } from "../constants/wemap";
 import { RouteContext } from "../context/Route";
 
-const TheMap: React.FC<any> = () => {
+const TheMap: React.FC<{ destination: [number | undefined, number | undefined] }> = (props) => {
+  const { destination } = props;
+
   const [enableTraffic, setEnableTraffic] = useState(false);
   const { setRouteData } = useContext(RouteContext);
   const routerHistory = useHistory();
@@ -17,6 +20,20 @@ const TheMap: React.FC<any> = () => {
   useIonViewDidEnter(() => {
     document.querySelector(SELECTOR.BTN_ADD_WAYPOINT)?.setAttribute("href", "javascript:void(0)");
   }, []);
+
+  useEffect(() => {
+    if (destination !== void 0 && destination[0] !== undefined && destination[1] !== undefined) {
+      (async () => {
+        const {
+          coords: { latitude, longitude },
+        } = await Geolocation.getCurrentPosition();
+        window.wemapgl.thedirections?.setOrigin([longitude, latitude]);
+        if (destination[0] !== undefined && destination[1] !== undefined) {
+          window.wemapgl.thedirections?.setDestination([destination[1], destination[0]]);
+        }
+      })();
+    }
+  }, [destination]);
 
   useEffect(() => {
     const map = new window.wemapgl.WeMap({
@@ -50,9 +67,9 @@ const TheMap: React.FC<any> = () => {
         message: "",
         buttons: [
           {
-            text: "Chỉ đường",
+            text: "Xem lộ trình",
             handler: () => routerHistory.push("/routing"),
-            icon: compassOutline,
+            icon: chevronForwardCircleOutline,
             side: "end",
           },
         ],

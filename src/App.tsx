@@ -75,7 +75,7 @@ const App: React.FC = () => {
             </IonTabButton>
             <IonTabButton tab="routing" href="/routing">
               <IonIcon icon={compassOutline}></IonIcon>
-              <IonLabel>Chỉ đường</IonLabel>
+              <IonLabel>Lộ trình</IonLabel>
             </IonTabButton>
             <IonTabButton tab="info" href="/info">
               <IonIcon icon={informationCircleOutline} />

@@ -35,7 +35,7 @@ const Routing: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Chỉ đường</IonTitle>
+          <IonTitle>Lộ trình</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

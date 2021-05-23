@@ -9,6 +9,14 @@
   flex-direction: column;
 }
 
+.place-routing {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
 .rating {
   display: flex;
   flex-direction: column;

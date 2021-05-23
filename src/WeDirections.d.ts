@@ -85,6 +85,24 @@ interface RouteData {
 }
 
 declare class WeDirections extends Control implements IControl {
+  /**
+   * @description I only define type for functions that I need
+   */
+  actions: {
+    reverse(): void;
+    clearOrigin(): void;
+    clearDestination(): void;
+    setOrigin(address: string): void;
+    setDestination(address: string): void;
+    setOriginFromCoordinates(coords: Position): void;
+    setDestinationFromCoordinates(coords: Position): void;
+    queryOrigin(text: string): { type: "ORIGIN_QUERY"; query: string };
+    queryDestination(text: string): { type: "DESTINATION_QUERY"; query: string };
+    queryOriginCoordinates(coords: Position): { type: "ORIGIN_FROM_COORDINATES"; coordinates: Position };
+    queryDestinationCoordinates(coords: Position): { type: "DESTINATION_FROM_COORDINATES"; coordinates: Position };
+  };
+  container: HTMLElement;
+
   constructor(options: WeDirectionsOptions);
 
   interactive(state: boolean): WeDirections;
