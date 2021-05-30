@@ -13,7 +13,7 @@ import {
   IonChip,
   IonLabel,
 } from "@ionic/react";
-import { close, compassSharp, listOutline, pricetagOutline } from "ionicons/icons";
+import { close, compassSharp, pricetagOutline } from "ionicons/icons";
 import Rating from "@material-ui/lab/Rating";
 import { UniqueDeviceID } from "@ionic-native/unique-device-id";
 
