@@ -43,9 +43,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "postinstall": "npm install -g cordova-res @ionic/cli",
     "format": "./node_modules/.bin/prettier --write ./src",
-    "install-ionic": "npm i -g @ionic/cli && ionic config set -g npmClient yarn",
-    "build-android": "react-scripts build && ionic cap build android",
+    "install-ionic": "ionic config set -g npmClient yarn",
+    "build-android": "react-scripts build && ionic cap build android && cordova-res android --skip-config --copy",
     "run-android": "react-scripts build && ionic cap run android --livereload --external"
   },
   "eslintConfig": {

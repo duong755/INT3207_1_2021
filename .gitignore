@@ -58,6 +58,7 @@ local.properties
 # production
 /build
 /android
+/resources/android
 
 # misc
 .DS_Store
