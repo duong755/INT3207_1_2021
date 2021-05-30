@@ -1,6 +1,6 @@
 {
   "appId": "uet.wemap",
-  "appName": "map",
+  "appName": "Map10",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
   "webDir": "build",

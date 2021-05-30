@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { SearchbarChangeEventDetail } from "@ionic/core";
 import {
   IonContent,
@@ -9,14 +9,17 @@ import {
   IonList,
   IonListHeader,
   IonItem,
+  IonSpinner,
+  IonText,
+  IonIcon,
   IonLabel,
-  IonRouterLink,
   IonThumbnail,
   IonImg,
 } from "@ionic/react";
-import { locateOutline } from "ionicons/icons";
+import { locateOutline, reloadCircleOutline } from "ionicons/icons";
+import { useQuery } from "react-query";
 
-import { placeRequest } from "../requests/place";
+import { place } from "../axios/place";
 import { PlaceDetail } from "../components/PlaceDetail";
 
 import "./Search.scss";
@@ -25,7 +28,6 @@ const Search: React.FC = () => {
   const [query, setQuery] = useState("");
   const [maxDistance, setMaxDistance] = useState("");
   const [detail, setDetail] = useState<PlaceDetail | undefined>(void 0);
-  const [response, setResponse] = useState<PlaceResponse | undefined>();
   const handleChangeQuery = useCallback((event: CustomEvent<SearchbarChangeEventDetail>) => {
     setQuery(event.detail.value ?? "");
   }, []);
@@ -33,15 +35,22 @@ const Search: React.FC = () => {
     setMaxDistance(event.detail.value ?? "5");
   }, []);
 
-  useEffect(() => {
-    if (query.trim() && !Number.isNaN(Number(maxDistance))) {
-      (async () => {
-        const res = await placeRequest(query, maxDistance);
-        const json: PlaceResponse = await res.json();
-        setResponse(json);
-      })();
+  const { data, isFetching, isError, isSuccess, refetch } = useQuery(
+    ["place", query, maxDistance],
+    () => {
+      return place.get("/place", {
+        params: {
+          q: query,
+          maxDistance: maxDistance,
+        },
+      });
+    },
+    {
+      enabled: !!query.trim() && !Number.isNaN(Number(maxDistance)),
     }
-  }, [query, maxDistance]);
+  );
+
+  const payload = data?.data as PlaceResponse;
 
   return (
     <IonPage>
@@ -57,24 +66,37 @@ const Search: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {response && (
+        {isFetching && (
+          <div className="fetching">
+            <IonSpinner name="dots" />
+            <IonText>Đang tìm kiếm</IonText>
+          </div>
+        )}
+        {isError && (
+          <div className="error">
+            <h2 onClick={() => refetch()}>
+              <IonIcon icon={reloadCircleOutline} />
+              &nbsp;Thử lại
+            </h2>
+            <IonText>Đã xảy ra lỗi khi tìm kiếm</IonText>
+          </div>
+        )}
+        {isSuccess && (
           <IonList>
             <IonListHeader>
-              {response.count > 0 ? `Tìm thấy ${response.count} kết quả` : `Không tìm thấy kết quả nào`}
+              {payload.count > 0 ? `Tìm thấy ${payload.count} kết quả` : `Không tìm thấy kết quả nào`}
             </IonListHeader>
             <PlaceDetail detail={detail} onDismiss={() => setDetail(void 0)} />
-            {response.docs.map((resultItem) => {
+            {payload.docs.map((resultItem) => {
               return (
-                <IonItem key={resultItem.place_name} onClick={() => setDetail(resultItem)}>
+                <IonItem key={resultItem.product} onClick={() => setDetail(resultItem)}>
                   <IonThumbnail slot="start">
                     <IonImg src={resultItem.prodct_image} />
                   </IonThumbnail>
                   <IonLabel>
-                    <h2>{resultItem.place_name}</h2>
+                    <h2>{resultItem.product}</h2>
                     <p>{resultItem.place_address}</p>
-                    <IonRouterLink target="_blank" href={resultItem.place_info_url}>
-                      {resultItem.place_info_url}
-                    </IonRouterLink>
+                    <p>{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(resultItem.product_price)}</p>
                   </IonLabel>
                 </IonItem>
               );

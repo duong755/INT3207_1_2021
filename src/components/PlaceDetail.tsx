@@ -15,16 +15,16 @@ import {
 } from "@ionic/react";
 import { close, compassSharp, pricetagOutline } from "ionicons/icons";
 import Rating from "@material-ui/lab/Rating";
-import { UniqueDeviceID } from "@ionic-native/unique-device-id";
+import { Plugins } from "@capacitor/core";
 
 import "./PlaceDetail.scss";
-import { rateRequest } from "../requests/rate";
+import { rate } from "../axios/rate";
 
 const PlaceDetail: React.FC<PlaceDetailProps> = (props) => {
   const { detail, onDismiss } = props;
   const [rating, setRating] = useState<number | null>(null);
   const routerHistory = useHistory<{ destination: [number | undefined, number | undefined] }>();
-  const [presentToast, dismissToast] = useIonToast();
+  const [presentToast, dismiss] = useIonToast();
 
   const handleChangeRating = useCallback((event: React.ChangeEvent<{}>, value: number | null) => {
     setRating(value);
@@ -32,31 +32,37 @@ const PlaceDetail: React.FC<PlaceDetailProps> = (props) => {
 
   const handleSubmitRate = useCallback(async () => {
     try {
-      const deviceId = await UniqueDeviceID.get();
-      await (await rateRequest(detail?._id ?? "", deviceId, rating ?? 3)).json();
+      const { uuid: deviceId } = await Plugins.Device.getInfo();
+      await rate.post("/rate", {
+        placeId: detail?._id,
+        deviceId: deviceId,
+        rate: rating,
+      });
       presentToast({
         message: "Đã thêm đánh giá",
         color: "success",
+        duration: 5000,
         buttons: [
           {
             text: "Đóng",
-            handler: dismissToast,
+            handler: dismiss,
           },
         ],
       });
-    } catch {
+    } catch (err) {
       presentToast({
-        message: "Đã xảy ra lỗi khi đánh giá",
+        message: JSON.stringify(err),
         color: "danger",
+        duration: 5000,
         buttons: [
           {
             text: "Đóng",
-            handler: dismissToast,
+            handler: dismiss,
           },
         ],
       });
     }
-  }, []);
+  }, [rating, detail]);
 
   const showRoutingOnTheMap = useCallback(() => {
     routerHistory.push("/map", { destination: [detail?.latitude, detail?.longitude] });

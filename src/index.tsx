@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import { RouteProvider } from "./context/Route";
 import App from "./App";
@@ -17,7 +18,9 @@ Sentry.init({
 ReactDOM.render(
   <React.StrictMode>
     <RouteProvider>
-      <App />
+      <QueryClientProvider client={new QueryClient()}>
+        <App />
+      </QueryClientProvider>
     </RouteProvider>
   </React.StrictMode>,
   document.getElementById("root")
