@@ -10,7 +10,7 @@ const rate = axios.create({
   },
   responseType: "json",
   url: "/rate",
-  timeout: 5000,
+  timeout: 15000,
 });
 
 export { rate };

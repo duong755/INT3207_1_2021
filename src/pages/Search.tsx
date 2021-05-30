@@ -91,16 +91,14 @@ const Search: React.FC = () => {
             <PlaceDetail detail={detail} onDismiss={() => setDetail(void 0)} />
             {payload.docs.map((resultItem) => {
               return (
-                <IonItem key={resultItem.place_name} onClick={() => setDetail(resultItem)}>
-                  <IonThumbnail>
+                <IonItem key={resultItem.product} onClick={() => setDetail(resultItem)}>
+                  <IonThumbnail slot="start">
                     <IonImg src={resultItem.prodct_image} />
                   </IonThumbnail>
                   <IonLabel>
-                    <h2>{resultItem.place_name}</h2>
+                    <h2>{resultItem.product}</h2>
                     <p>{resultItem.place_address}</p>
-                    <IonRouterLink target="_blank" href={resultItem.place_info_url}>
-                      {resultItem.place_info_url}
-                    </IonRouterLink>
+                    <p>{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(resultItem.product_price)}</p>
                   </IonLabel>
                 </IonItem>
               );

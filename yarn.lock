@@ -1313,13 +1313,6 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/unique-device-id@^5.33.0":
-  version "5.33.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/unique-device-id/-/unique-device-id-5.33.0.tgz#49f7806cd5ed4300ae05b234303e310d89060eae"
-  integrity sha512-Bg6lckJaQ6cxOZlIiKbPff8s78khP/DjCwG6/IIArcH3Yit+NtgRO4tm5pY6IRk/s25X7+fLWkqJBCu2aLP4Ug==
-  dependencies:
-    "@types/cordova" latest
-
 "@ionic/core@5.6.6", "@ionic/core@^5.5.0":
   version "5.6.6"
   resolved "https://registry.yarnpkg.com/@ionic/core/-/core-5.6.6.tgz#6392fdececca8c955c2309d05dfff8c467d8dc0b"
