@@ -9,8 +9,11 @@ import {
   IonContent,
   IonRouterLink,
   useIonToast,
+  IonImg,
+  IonChip,
+  IonLabel,
 } from "@ionic/react";
-import { close, compassSharp } from "ionicons/icons";
+import { close, compassSharp, listOutline, pricetagOutline } from "ionicons/icons";
 import Rating from "@material-ui/lab/Rating";
 import { UniqueDeviceID } from "@ionic-native/unique-device-id";
 
@@ -66,12 +69,31 @@ const PlaceDetail: React.FC<PlaceDetailProps> = (props) => {
             <h3>{detail?.place_name}</h3>
           </div>
           <p className="place-routing" onClick={showRoutingOnTheMap}>
-            <IonIcon icon={compassSharp} size="large" />Chỉ đường
+            <IonIcon icon={compassSharp} size="large" />
+            Chỉ đường
           </p>
           <p>{detail?.place_address}</p>
           <IonRouterLink target="_blank" href={detail?.place_info_url}>
             {detail?.place_info_url}
           </IonRouterLink>
+          <br />
+          <div>{detail?.product}</div>
+          <div>
+            <IonChip color="primary" outline={true}>
+              <IonLabel>{detail?.product_category}</IonLabel>
+            </IonChip>
+          </div>
+          <div>
+            <IonChip color="secondary" outline={true}>
+              <IonIcon icon={pricetagOutline} />
+              <IonLabel>
+                {new Intl.NumberFormat("vi-VN", { currency: "VND", style: "currency" }).format(
+                  detail?.product_price ?? 0
+                )}
+              </IonLabel>
+            </IonChip>
+          </div>
+          <IonImg src={detail?.prodct_image} />
           <br />
           <p>Lượt đánh giá: {detail?.rate_times}</p>
           <p>Điểm đánh giá: {detail?.rate}/5</p>

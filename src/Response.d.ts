@@ -18,6 +18,10 @@ declare type PlaceDetail = {
   longitude: number;
   latitude: number;
   contact: string;
+  product: string;
+  product_price: number;
+  prodct_image: string;
+  product_category: string;
 };
 
 declare type PlaceDetailProps = {

@@ -16,6 +16,8 @@ import {
   IonLabel,
   IonRouterLink,
   IonInput,
+  IonThumbnail,
+  IonImg,
 } from "@ionic/react";
 import { locateOutline, reloadCircleOutline } from "ionicons/icons";
 
@@ -90,6 +92,9 @@ const Search: React.FC = () => {
             {payload.docs.map((resultItem) => {
               return (
                 <IonItem key={resultItem.place_name} onClick={() => setDetail(resultItem)}>
+                  <IonThumbnail>
+                    <IonImg src={resultItem.prodct_image} />
+                  </IonThumbnail>
                   <IonLabel>
                     <h2>{resultItem.place_name}</h2>
                     <p>{resultItem.place_address}</p>
