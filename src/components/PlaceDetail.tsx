@@ -12,6 +12,7 @@ import {
   IonImg,
   IonChip,
   IonLabel,
+  IonButton,
 } from "@ionic/react";
 import { close, compassSharp, pricetagOutline } from "ionicons/icons";
 import Rating from "@material-ui/lab/Rating";
@@ -107,29 +108,30 @@ const PlaceDetail: React.FC<PlaceDetailProps> = (props) => {
               </IonLabel>
             </IonChip>
           </div>
-          <IonImg src={detail?.prodct_image} />
-          <br />
           <p>Lượt đánh giá: {detail?.rate_times}</p>
           <p>Điểm đánh giá: {detail?.rate}/5</p>
           <br />
+          <IonImg src={detail?.prodct_image} />
+          <br />
+          <br />
           <div className="rating">
-            <Rating name="rate-place" value={rating} onChange={handleChangeRating} />
-            {rating !== null &&
-              (rating === 1
-                ? "Chán"
-                : rating === 2
-                ? "Tạm được"
-                : rating === 3
-                ? "Bình thường"
-                : rating === 4
-                ? "Tốt"
-                : "Tuyệt vời")}
+            <Rating name="rate-place" size="large" value={rating} onChange={handleChangeRating} />
+            <div className="rate-text">
+              {rating !== null &&
+                (rating === 1
+                  ? "Chán"
+                  : rating === 2
+                  ? "Tạm được"
+                  : rating === 3
+                  ? "Bình thường"
+                  : rating === 4
+                  ? "Tốt"
+                  : "Tuyệt vời")}
+            </div>
             <br />
-            <span>
-              <span className="submit-rate" onClick={() => handleSubmitRate()}>
-                Gửi đánh giá
-              </span>
-            </span>
+            <IonButton size="large" color="primary" onClick={() => handleSubmitRate()}>
+              Gửi đánh giá
+            </IonButton>
           </div>
         </div>
       </IonContent>

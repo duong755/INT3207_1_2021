@@ -18,17 +18,11 @@
 }
 
 .rating {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  .submit-rate {
-    margin-top: 15px;
-    padding: 5px 10px;
-    border-radius: 3px;
-    background-color: var(--ion-color-primary);
-    color: #ffffff;
-    cursor: pointer;
-    display: inline-block;
-    flex-shrink: 1;
+  text-align: center;
+  .button {
+    background-color: transparent;
+  }
+  .rate-text {
+    font-size: 120%;
   }
 }
