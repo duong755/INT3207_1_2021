@@ -8,6 +8,7 @@ const place = axios.create({
   method: "GET",
   responseType: "json",
   url: "/place",
+  timeout: 5000,
 });
 
 place.interceptors.request.use(async (config) => {
