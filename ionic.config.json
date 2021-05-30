@@ -3,5 +3,10 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "react"
+  "type": "react",
+  "server": {
+    "allowNavigation": [
+      "map-datawarehouse.herokuapp.com"
+    ]
+  }
 }

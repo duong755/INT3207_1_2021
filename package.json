@@ -48,8 +48,8 @@
     "postinstall": "yarn global add cordova-res @ionic/cli",
     "format": "./node_modules/.bin/prettier --write ./src",
     "install-ionic": "ionic config set -g npmClient yarn",
-    "build-android": "react-scripts build && ionic cap build android && cordova-res android --skip-config --copy",
-    "run-android": "react-scripts build && ionic cap run android --livereload --external"
+    "build-android": "ionic cap build android && cordova-res android --skip-config --copy",
+    "run-android": "ionic cap run android --livereload --external"
   },
   "eslintConfig": {
     "extends": [

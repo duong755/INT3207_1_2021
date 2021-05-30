@@ -18,13 +18,13 @@ import Rating from "@material-ui/lab/Rating";
 import { UniqueDeviceID } from "@ionic-native/unique-device-id";
 
 import "./PlaceDetail.scss";
-import { rate } from "../axios/rate";
+import { rateRequest } from "../requests/rate";
 
 const PlaceDetail: React.FC<PlaceDetailProps> = (props) => {
   const { detail, onDismiss } = props;
   const [rating, setRating] = useState<number | null>(null);
   const routerHistory = useHistory<{ destination: [number | undefined, number | undefined] }>();
-  const [presentToast] = useIonToast();
+  const [presentToast, dismissToast] = useIonToast();
 
   const handleChangeRating = useCallback((event: React.ChangeEvent<{}>, value: number | null) => {
     setRating(value);
@@ -33,19 +33,27 @@ const PlaceDetail: React.FC<PlaceDetailProps> = (props) => {
   const handleSubmitRate = useCallback(async () => {
     try {
       const deviceId = await UniqueDeviceID.get();
-      await rate.post("/rate", {
-        placeId: detail?._id,
-        deviceId: deviceId,
-        rate: rating,
-      });
+      await (await rateRequest(detail?._id ?? "", deviceId, rating ?? 3)).json();
       presentToast({
         message: "Đã thêm đánh giá",
         color: "success",
+        buttons: [
+          {
+            text: "Đóng",
+            handler: dismissToast,
+          },
+        ],
       });
     } catch {
       presentToast({
         message: "Đã xảy ra lỗi khi đánh giá",
         color: "danger",
+        buttons: [
+          {
+            text: "Đóng",
+            handler: dismissToast,
+          },
+        ],
       });
     }
   }, []);

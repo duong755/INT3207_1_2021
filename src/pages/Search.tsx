@@ -15,13 +15,12 @@ import {
   IonItem,
   IonLabel,
   IonRouterLink,
-  IonInput,
   IonThumbnail,
   IonImg,
 } from "@ionic/react";
 import { locateOutline, reloadCircleOutline } from "ionicons/icons";
 
-import { place } from "../axios/place";
+import { placeRequest } from "../requests/place";
 import { PlaceDetail } from "../components/PlaceDetail";
 
 import "./Search.scss";
@@ -39,20 +38,15 @@ const Search: React.FC = () => {
 
   const { data, isFetching, isError, isSuccess, refetch } = useQuery(
     ["place", query, maxDistance],
-    () => {
-      return place.get("/place", {
-        params: {
-          q: query,
-          maxDistance: maxDistance,
-        },
-      });
+    async () => {
+      return (await placeRequest(query, maxDistance)).json();
     },
     {
       enabled: !!query.trim() && !Number.isNaN(Number(maxDistance)),
     }
   );
 
-  const payload = data?.data as PlaceResponse;
+  const payload = data as PlaceResponse;
 
   return (
     <IonPage>
@@ -92,7 +86,7 @@ const Search: React.FC = () => {
             {payload.docs.map((resultItem) => {
               return (
                 <IonItem key={resultItem.place_name} onClick={() => setDetail(resultItem)}>
-                  <IonThumbnail>
+                  <IonThumbnail slot="start">
                     <IonImg src={resultItem.prodct_image} />
                   </IonThumbnail>
                   <IonLabel>

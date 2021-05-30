@@ -3,6 +3,13 @@ import { Geolocation } from "@ionic-native/geolocation";
 
 import { API_URL } from "../constants/api";
 
+const placeRequest = async (q: string, maxDist: number | string) => {
+  const {
+    coords: { latitude, longitude },
+  } = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
+  return fetch(`${API_URL}/place?q=${q}&latitude=${latitude}&longitude=${longitude}&maxDistance=${maxDist}`);
+};
+
 const place = axios.create({
   baseURL: API_URL,
   method: "GET",
@@ -20,4 +27,8 @@ place.interceptors.request.use(async (config) => {
   return config;
 }, undefined);
 
-export { place };
+place.interceptors.response.use(undefined, (err) => {
+  throw err;
+});
+
+export { place, placeRequest };
