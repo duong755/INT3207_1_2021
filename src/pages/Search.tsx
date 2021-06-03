@@ -20,6 +20,7 @@ import { locateOutline, reloadCircleOutline } from "ionicons/icons";
 import { useQuery } from "react-query";
 
 import { place } from "../axios/place";
+import { removeAccents } from "../helpers/removeAccents";
 import { PlaceDetail } from "../components/PlaceDetail";
 
 import "./Search.scss";
@@ -40,7 +41,7 @@ const Search: React.FC = () => {
     () => {
       return place.get("/place", {
         params: {
-          q: query,
+          q: removeAccents(query),
           maxDistance: maxDistance,
         },
       });
