@@ -56,13 +56,13 @@ const Search: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonSearchbar value={query} onIonChange={handleChangeQuery} />
           <IonSearchbar
             searchIcon={locateOutline}
             placeholder="Bán kính tìm kiếm (km)"
             value={maxDistance}
             onIonChange={handleChangeMaxDistance}
           />
+          <IonSearchbar value={query} onIonChange={handleChangeQuery} placeholder="Tìm kiếm sản phẩm..." />
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
