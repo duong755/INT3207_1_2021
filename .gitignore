@@ -59,6 +59,8 @@ local.properties
 /build
 /android
 /resources/android
+!/resources/android/icon-background.png
+!/resources/android/icon-foreground.png
 
 # misc
 .DS_Store
