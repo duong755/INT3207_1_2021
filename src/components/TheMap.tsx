@@ -29,7 +29,11 @@ const TheMap: React.FC<{ destination: [number | undefined, number | undefined] }
         } = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
         window.wemapgl.thedirections?.actions.setOriginFromCoordinates([longitude, latitude]);
         if (destination[0] !== undefined && destination[1] !== undefined) {
+          const avgLat = (destination[0] + latitude)/2;
+          const avgLng = (destination[1] + longitude)/2;
           window.wemapgl.thedirections?.actions.setDestinationFromCoordinates([destination[1], destination[0]]);
+          window.wemapgl.themap?.setCenter([avgLng, avgLat]);
+          window.wemapgl.themap?.fitBounds([{ lat: latitude, lng: longitude }, { lat: destination[0], lng: destination[1] }]);
         }
       })();
     }
