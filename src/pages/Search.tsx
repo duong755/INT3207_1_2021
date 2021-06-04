@@ -18,7 +18,7 @@ import {
 } from "@ionic/react";
 import { locateOutline, reloadCircleOutline } from "ionicons/icons";
 import { useQuery } from "react-query";
-import { Geolocation, Permissions, PermissionType } from "@capacitor/core";
+import { Geolocation } from "@capacitor/core";
 
 import { place } from "../axios/place";
 import { removeAccents } from "../helpers/removeAccents";
@@ -38,13 +38,9 @@ const Search: React.FC = () => {
     setMaxDistance(event.detail.value ?? "5");
   }, []);
 
-  const { data, isFetching, isError, isSuccess, refetch, error } = useQuery<AxiosResponse<any>, Error>(
+  const { data, isFetching, isError, isSuccess, refetch } = useQuery<AxiosResponse<any>, Error>(
     ["place", query, maxDistance],
     async () => {
-      const result = await Permissions.query({ name: PermissionType.Geolocation });
-      if (result.state === "denied") {
-        throw new Error("Hãy bật vị trí để sử dụng tính năng tìm kiếm");
-      }
       const {
         coords: { latitude, longitude },
       } = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
@@ -109,7 +105,11 @@ const Search: React.FC = () => {
                   <IonLabel>
                     <h2>{resultItem.product}</h2>
                     <p>{resultItem.place_address}</p>
-                    <p>{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(resultItem.product_price)}</p>
+                    <p>
+                      {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
+                        resultItem.product_price
+                      )}
+                    </p>
                   </IonLabel>
                 </IonItem>
               );
