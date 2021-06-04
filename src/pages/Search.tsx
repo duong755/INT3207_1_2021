@@ -18,12 +18,14 @@ import {
 } from "@ionic/react";
 import { locateOutline, reloadCircleOutline } from "ionicons/icons";
 import { useQuery } from "react-query";
+import { Geolocation, Permissions, PermissionType } from "@capacitor/core";
 
 import { place } from "../axios/place";
 import { removeAccents } from "../helpers/removeAccents";
 import { PlaceDetail } from "../components/PlaceDetail";
 
 import "./Search.scss";
+import { AxiosResponse } from "axios";
 
 const Search: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -36,13 +38,22 @@ const Search: React.FC = () => {
     setMaxDistance(event.detail.value ?? "5");
   }, []);
 
-  const { data, isFetching, isError, isSuccess, refetch } = useQuery(
+  const { data, isFetching, isError, isSuccess, refetch, error } = useQuery<AxiosResponse<any>, Error>(
     ["place", query, maxDistance],
-    () => {
+    async () => {
+      const result = await Permissions.query({ name: PermissionType.Geolocation });
+      if (result.state === "denied") {
+        throw new Error("Hãy bật vị trí để sử dụng tính năng tìm kiếm");
+      }
+      const {
+        coords: { latitude, longitude },
+      } = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
       return place.get("/place", {
         params: {
           q: removeAccents(query),
           maxDistance: maxDistance,
+          latitude,
+          longitude,
         },
       });
     },
@@ -80,6 +91,7 @@ const Search: React.FC = () => {
               &nbsp;Thử lại
             </h2>
             <IonText>Đã xảy ra lỗi khi tìm kiếm</IonText>
+            <IonText>{error?.message}</IonText>
           </div>
         )}
         {isSuccess && (
@@ -90,7 +102,7 @@ const Search: React.FC = () => {
             <PlaceDetail detail={detail} onDismiss={() => setDetail(void 0)} />
             {payload.docs.map((resultItem) => {
               return (
-                <IonItem key={resultItem.product} onClick={() => setDetail(resultItem)}>
+                <IonItem key={resultItem._id} onClick={() => setDetail(resultItem)}>
                   <IonThumbnail slot="start">
                     <IonImg src={resultItem.prodct_image} />
                   </IonThumbnail>

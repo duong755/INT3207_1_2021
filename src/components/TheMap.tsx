@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useIonViewDidEnter, useIonToast, IonIcon, IonButtons } from "@ionic/react";
-import { addOutline, carOutline, chevronForwardCircleOutline, compassOutline, removeOutline } from "ionicons/icons";
+import { addOutline, carOutline, chevronForwardCircleOutline, removeOutline } from "ionicons/icons";
 import { Geolocation } from "@ionic-native/geolocation";
 
 import "./TheMap.scss";
@@ -26,10 +26,10 @@ const TheMap: React.FC<{ destination: [number | undefined, number | undefined] }
       (async () => {
         const {
           coords: { latitude, longitude },
-        } = await Geolocation.getCurrentPosition();
-        window.wemapgl.thedirections?.setOrigin([longitude, latitude]);
+        } = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
+        window.wemapgl.thedirections?.actions.setOriginFromCoordinates([longitude, latitude]);
         if (destination[0] !== undefined && destination[1] !== undefined) {
-          window.wemapgl.thedirections?.setDestination([destination[1], destination[0]]);
+          window.wemapgl.thedirections?.actions.setDestinationFromCoordinates([destination[1], destination[0]]);
         }
       })();
     }
@@ -55,6 +55,7 @@ const TheMap: React.FC<{ destination: [number | undefined, number | undefined] }
       controls: {
         instructions: false,
       },
+      flyTo: true,
     });
 
     directions.on("route", (routeData) => {
@@ -70,7 +71,7 @@ const TheMap: React.FC<{ destination: [number | undefined, number | undefined] }
             text: "Xem lộ trình",
             handler: () => routerHistory.push("/routing"),
             icon: chevronForwardCircleOutline,
-            side: "end",
+            side: "start",
           },
         ],
       });

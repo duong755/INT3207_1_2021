@@ -83,10 +83,10 @@ const PlaceDetail: React.FC<PlaceDetailProps> = (props) => {
           <div className="place-name">
             <h3>{detail?.place_name}</h3>
           </div>
-          <p className="place-routing" onClick={showRoutingOnTheMap}>
+          <IonButton size="default" className="place-routing" onClick={showRoutingOnTheMap}>
             <IonIcon icon={compassSharp} size="large" />
             Chỉ đường
-          </p>
+          </IonButton>
           <p>{detail?.place_address}</p>
           <IonRouterLink target="_blank" href={detail?.place_info_url}>
             {detail?.place_info_url}

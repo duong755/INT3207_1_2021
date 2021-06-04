@@ -1,7 +1,7 @@
 /// <reference types="mapbox-gl" />
 /// <reference types="geojson" />
 
-import { Control, IControl, Point } from "mapbox-gl";
+import { Control, IControl, Point, PointLike } from "mapbox-gl";
 import { Feature, Position } from "geojson";
 
 interface WeDirectionsOptions {
