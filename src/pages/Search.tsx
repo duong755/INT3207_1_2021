@@ -91,7 +91,7 @@ const Search: React.FC = () => {
               &nbsp;Thử lại
             </h2>
             <IonText>Đã xảy ra lỗi khi tìm kiếm</IonText>
-            <IonText>{error?.message}</IonText>
+            <IonText>Kiểm tra kết nối Internet và bật vị trí</IonText>
           </div>
         )}
         {isSuccess && (
